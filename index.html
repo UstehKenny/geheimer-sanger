@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        
+
+
+        * {
+            box-sizing: border-box;
+            --neon-red: #ff1e1e;
+            --neon-red-dim: #c01515;
+            --neon-red-glow: rgba(255, 30, 30, 0.85);
+            --neon-blue: #00baff;
+            --neon-blue-dim: #008fc7;
+            --neon-blue-glow: rgba(0, 186, 255, 0.85);
+            --text-white: #e6ecff;
+            --text-muted: rgba(230,236,255,.65);
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background:
+                radial-gradient(circle at bottom, #0b1a2a, #020409 70%);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            font-family: "Orbitron", system-ui, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Escena */
+        .scene {
+            position: relative;
+            width: 50vw;
+            height: 50vh;
+            perspective: 1500px;
+        }
+
+        /* Esquina del edificio */
+        .corner {
+            position: absolute;
+            bottom: 50%;  
+            left: 50%;
+            height: 400px;
+            transform: translateX(-50%) rotateX(5deg);
+            transform-style: preserve-3d;
+        }
+
+        /* Billboard base */
+        .billboard {
+            width: 60vw;
+            height: 400px;
+            background: linear-gradient(135deg, #0a0f1f, #121c3a);
+            position: relative;
+            overflow: hidden;
+            /*animation: ledFlicker 3.5s infinite;*/
+            animation: cyberFlicker 4.5s infinite;
+        }
+
+        /* Lado izquierdo */
+        .billboard.left {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            width: 60vw;
+            height: 400px;
+
+            transform-origin: left center;
+            transform: rotateY(32deg);
+
+            border-radius: 12px 0 0 12px;
+        }
+
+        /* Lado derecho */
+        .billboard.right {
+            position: absolute;
+            right: 0;
+            top: 0;
+
+            width: 60vw;
+            height: 400px;
+
+            transform-origin: right center;
+            transform: rotateY(-32deg);
+
+            border-radius: 0 12px 12px 0;
+            background-image: url("./img/foto.jpg");
+            background-size: 50% auto;
+        }
+
+        .corner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -7px;
+            width: 14px;
+            height: 400px;
+
+            background:
+                linear-gradient(
+                to bottom,
+                #0b1225,
+                #020409
+                );
+
+            box-shadow:
+                0 0 30px rgba(0,255,255,.7),
+                0 0 70px rgba(255,0,200,.35);
+        }
+
+        /* Marco LED */
+        /*.billboard::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            box-shadow:
+                inset 0 0 0 2px #00ffff,
+                inset 0 0 25px rgba(0,255,255,.6),
+                inset 0 0 50px rgba(255,0,200,.25);
+            pointer-events: none;
+        }*/
+        .billboard::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            box-shadow:
+                inset 0 0 0 2px var(--neon-blue),
+                inset 0 0 22px rgba(0,186,255,.5),
+                inset 0 0 40px rgba(255,30,30,.2);
+        }
+
+
+        /* Scanlines LED */
+        .billboard::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                repeating-linear-gradient(
+                0deg,
+                rgba(255,255,255,.05) 0 1px,
+                transparent 1px 3px
+                );
+            opacity: .35;
+            animation: scanMove 1.2s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Contenido */
+        .content {
+            height: 100%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Texto */
+        /*.artist {
+            font-size: 36px;
+            margin: 0;
+            color: #ff4fd8;
+            text-shadow:
+                0 0 12px rgba(255,79,216,.9),
+                0 0 30px rgba(255,79,216,.6);
+        }*/
+        .artist {
+        color: var(--neon-red);
+        text-shadow:
+            0 0 8px var(--neon-red-glow),
+            0 0 20px rgba(255,30,30,.6),
+            0 0 45px rgba(255,30,30,.35);
+        }
+
+
+        /*.song {
+            font-size: 22px;
+            margin: 8px 0;
+            color: #ffffff;
+            text-shadow:
+                0 0 10px rgba(0,255,255,.9);
+        }*/
+        .song {
+        color: var(--text-white);
+        text-shadow:
+            0 0 6px var(--neon-blue-glow);
+        }
+
+
+        /*.countdown {
+            margin-top: 16px;
+            font-size: 20px;
+            letter-spacing: 3px;
+            color: #00ffff;
+            text-shadow:
+                0 0 15px rgba(0,255,255,1),
+                0 0 35px rgba(0,255,255,.6);
+        }*/
+        .countdown {
+        color: var(--neon-blue);
+        text-shadow:
+            0 0 10px var(--neon-blue-glow),
+            0 0 28px rgba(0,186,255,.6);
+        }
+
+
+        /* 🔥 Animaciones */
+        @keyframes ledFlicker {
+            0%, 100% { filter: brightness(1); }
+            48% { filter: brightness(1.1); }
+            50% { filter: brightness(.85); }
+            52% { filter: brightness(1.15); }
+        }
+
+        @keyframes scanMove {
+            from { background-position: 0 0; }
+            to { background-position: 0 6px; }
+        }
+
+        @keyframes cyberFlicker {
+            0%, 100% { filter: brightness(1); }
+            47% { filter: brightness(.9); }
+            49% { filter: brightness(.6); }
+            50% { filter: brightness(1.1); }
+            52% { filter: brightness(.85); }
+            55% { filter: brightness(1); }
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="scene">
+        <div class="corner">
+            <div class="billboard left">
+            <div class="content">
+                <h1 class="artist">Estailus</h1>
+                <h2 class="song">CANCIÓN</h2>
+                <div class="countdown">00:12:34</div>
+            </div>
+            </div>
+
+            <div class="billboard right">
+            <div class="content">
+                <h1 class="artist">Estaluis</h1>
+                <h2 class="song">CANCIÓN</h2>
+                <div class="countdown">00:12:34</div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
