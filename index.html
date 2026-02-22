@@ -10,17 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap" rel="stylesheet">
 
     <style>
-        
-
 
         * {
             box-sizing: border-box;
             --neon-red: #ff1e1e;
             --neon-red-dim: #c01515;
             --neon-red-glow: rgba(255, 30, 30, 0.85);
-            --neon-blue: #00baff;
-            --neon-blue-dim: #008fc7;
-            --neon-blue-glow: rgba(0, 186, 255, 0.85);
+            --neon-blue: #2323FF;
+            --neon-blue-bright: #4d4dff;
+            --neon-blue-glow: rgba(35, 35, 255, 0.95);
+            --neon-blue-outer: rgba(35, 35, 255, 0.45);
             --text-white: #e6ecff;
             --text-muted: rgba(230,236,255,.65);
         }
@@ -43,6 +42,7 @@
             width: 50vw;
             height: 50vh;
             perspective: 1500px;
+            /* display: none; */
         }
 
         /* Esquina del edificio */
@@ -62,8 +62,12 @@
             background: linear-gradient(135deg, #0a0f1f, #121c3a);
             position: relative;
             overflow: hidden;
-            /*animation: ledFlicker 3.5s infinite;*/
-            animation: cyberFlicker 4.5s infinite;
+            animation: cyberFlicker 3.8s infinite;
+            margin: 1px;
+
+            box-shadow:
+                0 0 20px rgba(35,35,255,0.4),
+                0 0 60px rgba(35,35,255,0.25);
         }
 
         /* Lado izquierdo */
@@ -98,45 +102,15 @@
             background-size: 50% auto;
         }
 
-        .corner::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -7px;
-            width: 14px;
-            height: 400px;
-
-            background:
-                linear-gradient(
-                to bottom,
-                #0b1225,
-                #020409
-                );
-
-            box-shadow:
-                0 0 30px rgba(0,255,255,.7),
-                0 0 70px rgba(255,0,200,.35);
-        }
-
-        /* Marco LED */
-        /*.billboard::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            box-shadow:
-                inset 0 0 0 2px #00ffff,
-                inset 0 0 25px rgba(0,255,255,.6),
-                inset 0 0 50px rgba(255,0,200,.25);
-            pointer-events: none;
-        }*/
+         /* Marco LED */
+        
         .billboard::before {
-            content: "";
-            position: absolute;
-            inset: 0;
             box-shadow:
                 inset 0 0 0 2px var(--neon-blue),
-                inset 0 0 22px rgba(0,186,255,.5),
-                inset 0 0 40px rgba(255,30,30,.2);
+                inset 0 0 20px var(--neon-blue-glow),
+                inset 0 0 40px var(--neon-blue-glow),
+                0 0 30px var(--neon-blue-outer),
+                0 0 80px var(--neon-blue-outer);
         }
 
 
@@ -144,17 +118,50 @@
         .billboard::after {
             content: "";
             position: absolute;
-            inset: 0;
-            background-image:
-                repeating-linear-gradient(
-                0deg,
-                rgba(255,255,255,.05) 0 1px,
-                transparent 1px 3px
-                );
+            top: 0;
+            right: 0; /* el lado del corner */
+            width: 35%;
+            height: 100%;
+            background: linear-gradient(
+                to left,
+                rgba(35,35,255,0.35),
+                rgba(35,35,255,0.15),
+                transparent
+            );
+
+  pointer-events: none;
             opacity: .35;
             animation: scanMove 1.2s linear infinite;
             pointer-events: none;
         }
+
+        .corner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -7px;
+
+            width: 8px;
+            height: 400px;
+
+            background: linear-gradient(
+                to bottom,
+                #0a0f1f,
+                #050814
+            );
+
+            border-radius: 4px;
+
+            box-shadow:
+                0 0 10px #2323FF,
+                0 0 25px rgba(35,35,255,.9),
+                0 0 60px rgba(35,35,255,.6),
+                0 0 120px rgba(35,35,255,.3);
+        }
+
+        
+
+       
 
         /* Contenido */
         .content {
@@ -166,14 +173,7 @@
         }
 
         /* Texto */
-        /*.artist {
-            font-size: 36px;
-            margin: 0;
-            color: #ff4fd8;
-            text-shadow:
-                0 0 12px rgba(255,79,216,.9),
-                0 0 30px rgba(255,79,216,.6);
-        }*/
+        
         .artist {
         color: var(--neon-red);
         text-shadow:
@@ -182,45 +182,25 @@
             0 0 45px rgba(255,30,30,.35);
         }
 
-
-        /*.song {
-            font-size: 22px;
-            margin: 8px 0;
-            color: #ffffff;
-            text-shadow:
-                0 0 10px rgba(0,255,255,.9);
-        }*/
         .song {
         color: var(--text-white);
         text-shadow:
             0 0 6px var(--neon-blue-glow);
         }
 
-
-        /*.countdown {
-            margin-top: 16px;
-            font-size: 20px;
-            letter-spacing: 3px;
-            color: #00ffff;
-            text-shadow:
-                0 0 15px rgba(0,255,255,1),
-                0 0 35px rgba(0,255,255,.6);
-        }*/
         .countdown {
-        color: var(--neon-blue);
-        text-shadow:
-            0 0 10px var(--neon-blue-glow),
-            0 0 28px rgba(0,186,255,.6);
+            color: var(--neon-blue);
+
+            text-shadow:
+                0 0 6px #ffffff,
+                0 0 12px var(--neon-blue-glow),
+                0 0 25px var(--neon-blue-glow),
+                0 0 50px var(--neon-blue-outer),
+                0 0 90px var(--neon-blue-outer);
         }
 
 
-        /* 🔥 Animaciones */
-        @keyframes ledFlicker {
-            0%, 100% { filter: brightness(1); }
-            48% { filter: brightness(1.1); }
-            50% { filter: brightness(.85); }
-            52% { filter: brightness(1.15); }
-        }
+        /* Animaciones */
 
         @keyframes scanMove {
             from { background-position: 0 0; }
@@ -258,6 +238,10 @@
             </div>
             </div>
         </div>
+    </div>
+
+    <div class="code">
+
     </div>
 
 
