@@ -1,249 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>???</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-    <style>
+<style>
 
-        * {
-            box-sizing: border-box;
-            --neon-red: #ff1e1e;
-            --neon-red-dim: #c01515;
-            --neon-red-glow: rgba(255, 30, 30, 0.85);
-            --neon-blue: #2323FF;
-            --neon-blue-bright: #4d4dff;
-            --neon-blue-glow: rgba(35, 35, 255, 0.95);
-            --neon-blue-outer: rgba(35, 35, 255, 0.45);
-            --text-white: #e6ecff;
-            --text-muted: rgba(230,236,255,.65);
-        }
+*{
+    box-sizing:border-box;
 
-        body {
-            margin: 0;
-            height: 100vh;
-            background:
-                radial-gradient(circle at bottom, #0b1a2a, #020409 70%);
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            font-family: "Orbitron", system-ui, sans-serif;
-            overflow: hidden;
-        }
+    --neon-blue:#2323FF;
+    --neon-blue-glow:rgba(35,35,255,.95);
+    --neon-blue-outer:rgba(35,35,255,.45);
 
-        /* Escena */
-        .scene {
-            position: relative;
-            width: 50vw;
-            height: 50vh;
-            perspective: 1500px;
-            /* display: none; */
-        }
+    --neon-red:#ff1e1e;
+    --neon-red-glow:rgba(255,30,30,.85);
+    
+}
 
-        /* Esquina del edificio */
-        .corner {
-            position: absolute;
-            bottom: 50%;  
-            left: 50%;
-            height: 400px;
-            transform: translateX(-50%) rotateX(5deg);
-            transform-style: preserve-3d;
-        }
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    background:radial-gradient(circle at center,#0b1a2a,#020409 80%);
+    font-family:Orbitron,sans-serif;
+    overflow:hidden;
+}
 
-        /* Billboard base */
-        .billboard {
-            width: 60vw;
-            height: 400px;
-            background: linear-gradient(135deg, #0a0f1f, #121c3a);
-            position: relative;
-            overflow: hidden;
-            animation: cyberFlicker 3.8s infinite;
-            margin: 1px;
+/* ESCENA (CÁMARA) */
 
-            box-shadow:
-                0 0 20px rgba(35,35,255,0.4),
-                0 0 60px rgba(35,35,255,0.25);
-        }
+.scene{
+    position:relative;
+    width:100vw;
+    height:85vh;
+    perspective: 1100px;
+}
 
-        /* Lado izquierdo */
-        .billboard.left {
-            position: absolute;
-            left: 0;
-            top: 0;
+/* CONTENEDOR 3D */
 
-            width: 60vw;
-            height: 400px;
+.city{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:80vh;
+    transform-style:preserve-3d;
+}
 
-            transform-origin: left center;
-            transform: rotateY(32deg);
+/* PARED */
 
-            border-radius: 12px 0 0 12px;
-        }
+.building{
+    position:fixed;
+    bottom:0;
+    width:100vw;
+    height:100vh;
+    background:url("./img/kenny-eliason.jpg") center/cover;
+    background-repeat: repeat-x;
+    filter:brightness(.25);
+}
 
-        /* Lado derecho */
-        .billboard.right {
-            position: absolute;
-            right: 0;
-            top: 0;
+/* IZQUIERDA */
+.building.left{
+    left:50%;
+    transform-origin:right center;
+    transform:
+        translateX(-100%)
+        rotateY(-35deg)
+        translateZ(-250px);
+}
 
-            width: 60vw;
-            height: 400px;
-
-            transform-origin: right center;
-            transform: rotateY(-32deg);
-
-            border-radius: 0 12px 12px 0;
-            background-image: url("./img/foto.jpg");
-            background-size: 50% auto;
-        }
-
-         /* Marco LED */
+/* DERECHA */
+.building.right{
+    left:50%;
+    transform-origin:left center;
+    transform:
         
-        .billboard::before {
-            box-shadow:
-                inset 0 0 0 2px var(--neon-blue),
-                inset 0 0 20px var(--neon-blue-glow),
-                inset 0 0 40px var(--neon-blue-glow),
-                0 0 30px var(--neon-blue-outer),
-                0 0 80px var(--neon-blue-outer);
-        }
+        rotateY(35deg)
+        translateZ(-250px);
+}
+
+/* ESQUINA (LO MÁS CERCANO) */
+
+.corner{
+    position:relative;
+    top:25%;
+    left:50%;
+    transform:
+        translateX(-50%)
+        translateZ(180px);
+    width:14px;
+    height:52%;
+    background:#0a0f1f;
+    border-radius:6px;
+
+    box-shadow:
+        0 0 15px var(--neon-blue),
+        0 0 50px var(--neon-blue-glow),
+        0 0 120px var(--neon-blue-outer);
+}
 
 
-        /* Scanlines LED */
-        .billboard::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0; /* el lado del corner */
-            width: 35%;
-            height: 100%;
-            background: linear-gradient(
-                to left,
-                rgba(35,35,255,0.35),
-                rgba(35,35,255,0.15),
-                transparent
-            );
+.billboard{
+    position:absolute;
+    bottom:14vh;
 
-  pointer-events: none;
-            opacity: .35;
-            animation: scanMove 1.2s linear infinite;
-            pointer-events: none;
-        }
+    width:clamp(220px, 28vw, 420px);
+    aspect-ratio: 1 / 1;  
 
-        .corner::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -7px;
+    background:linear-gradient(135deg,#0a0f1f,#121c3a);
+    overflow:hidden;
 
-            width: 8px;
-            height: 400px;
+    box-shadow:
+        0 0 25px var(--neon-blue-glow),
+        0 0 70px var(--neon-blue-outer);
+}
+.billboard.left,
+.billboard.right{
+    transform:
+        translateX(-100%) rotateY(-35deg) translateZ(90px);
+}
 
-            background: linear-gradient(
-                to bottom,
-                #0a0f1f,
-                #050814
-            );
+/* IZQUIERDO */
+.billboard.left{
+    left:51%;
+    transform-origin:right center;
+    transform:
+        translateX(-100%)   /* lo mueve hacia la izquierda */
+        rotateY(-35deg)
+        translateZ(60px);
+    border-radius:12px 0 0 12px;
+}
 
-            border-radius: 4px;
+/* DERECHO */
+.billboard.right{
+    left:49%;
+    transform-origin:left center;
+    transform:
+        rotateY(35deg)
+        translateZ(60px);
+    border-radius:0 12px 12px 0;
+}
 
-            box-shadow:
-                0 0 10px #2323FF,
-                0 0 25px rgba(35,35,255,.9),
-                0 0 60px rgba(35,35,255,.6),
-                0 0 120px rgba(35,35,255,.3);
-        }
+/* CONTENIDO */
 
-        
+.content{
+    padding:clamp(20px,3vw,40px);
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
 
-       
+/* TEXTO */
 
-        /* Contenido */
-        .content {
-            height: 100%;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+.artist{
+    font-size:clamp(1.5rem,4vw,3rem);
+    color:var(--neon-red);
+    text-shadow:
+        0 0 10px var(--neon-red-glow),
+        0 0 30px rgba(255,30,30,.5);
+}
 
-        /* Texto */
-        
-        .artist {
-        color: var(--neon-red);
-        text-shadow:
-            0 0 8px var(--neon-red-glow),
-            0 0 20px rgba(255,30,30,.6),
-            0 0 45px rgba(255,30,30,.35);
-        }
+.song{
+    font-size:clamp(1rem,2vw,1.5rem);
+    color:#fff;
+    margin:.5em 0;
+}
 
-        .song {
-        color: var(--text-white);
-        text-shadow:
-            0 0 6px var(--neon-blue-glow);
-        }
+.countdown{
+    font-size:clamp(1rem,3vw,2rem);
+    color:var(--neon-red);
+    text-shadow:
+        0 0 10px var(--neon-red-glow),
+        0 0 25px var(--neon-blue-glow),
+        0 0 60px var(--neon-blue-outer);
+}
 
-        .countdown {
-            color: var(--neon-blue);
-
-            text-shadow:
-                0 0 6px #ffffff,
-                0 0 12px var(--neon-blue-glow),
-                0 0 25px var(--neon-blue-glow),
-                0 0 50px var(--neon-blue-outer),
-                0 0 90px var(--neon-blue-outer);
-        }
-
-
-        /* Animaciones */
-
-        @keyframes scanMove {
-            from { background-position: 0 0; }
-            to { background-position: 0 6px; }
-        }
-
-        @keyframes cyberFlicker {
-            0%, 100% { filter: brightness(1); }
-            47% { filter: brightness(.9); }
-            49% { filter: brightness(.6); }
-            50% { filter: brightness(1.1); }
-            52% { filter: brightness(.85); }
-            55% { filter: brightness(1); }
-        }
-
-
-    </style>
+</style>
 </head>
 <body>
-    <div class="scene">
-        <div class="corner">
-            <div class="billboard left">
-            <div class="content">
-                <h1 class="artist">Estailus</h1>
-                <h2 class="song">CANCIÓN</h2>
-                <div class="countdown">00:12:34</div>
-            </div>
-            </div>
 
-            <div class="billboard right">
+<div class="scene">
+    <div class="city">
+
+        <!-- FONDO -->
+        <div class="building left"></div>
+        <div class="building right"></div>
+
+        <!-- BILLBOARD IZQUIERDO -->
+        <div class="billboard left">
             <div class="content">
-                <h1 class="artist">Estaluis</h1>
-                <h2 class="song">CANCIÓN</h2>
+                <div class="artist">T A I L U S</div>
+                <div class="song">? ? ?</div>
                 <div class="countdown">00:12:34</div>
-            </div>
             </div>
         </div>
+
+        <!-- BILLBOARD DERECHO -->
+        <div class="billboard right">
+            <div class="content">
+                <div class="artist">T A I L U S</div>
+                <div class="song">? ? ?</div>
+                <div class="countdown">00:12:34</div>
+            </div>
+        </div>
+
+        <!-- ESQUINA -->
+        <div class="corner"></div>
+
     </div>
-
-    <div class="code">
-
-    </div>
-
+</div>
 
 </body>
 </html>
