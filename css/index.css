@@ -1,0 +1,111 @@
+*{
+    box-sizing:border-box;
+
+    --neon-blue:#2323FF;
+    --neon-blue-glow:rgba(35,35,255,.95);
+    --neon-blue-outer:rgba(35,35,255,.45);
+
+    --neon-red:#ff1e1e;
+    --neon-red-glow:rgba(255,30,30,.85);
+
+    font-size: 20px;
+}
+
+body{
+	background:radial-gradient(circle at bottom, #0b1a2a, #020409 70%);
+}
+
+.code{
+    width:100%;
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 25px;
+}
+input{
+    background-color: transparent;
+    color:var(--neon-blue);
+    box-shadow: 0 0 10px var(--neon-blue-glow);
+    text-align: center;
+    outline: none;
+    border: dotted 5px;
+    border-color: var(--neon-blue);
+    width: 300px;
+    padding: 1%;
+
+    animation: cyberFlicker 2.5s infinite;
+}
+input:focus{
+    letter-spacing: 10px;
+}
+input::placeholder {
+  color:var(--neon-blue);
+}
+input:focus::placeholder {
+  color: transparent;
+}
+.enter{
+    color: #fff;
+    width: 130px;
+    height: 40px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block; 
+
+    border: 1px solid ;
+    color: var(--neon-red);
+    box-shadow: 0 0 5px var(--neon-red-glow), 0 0 5px var(--neon-red-glow) inset;
+    transition: all 0.3s ease;
+
+    animation: cyberFlicker 2.5s infinite;
+}
+
+.enter:hover{
+    cursor: pointer;
+    animation: pulsate 3.5s infinite alternate;
+}
+
+@keyframes cyberFlicker {
+  0%, 100% { filter: brightness(1); }
+  47% { filter: brightness(.9); }
+  49% { filter: brightness(.6); }
+  50% { filter: brightness(1.1); }
+  52% { filter: brightness(.85); }
+  55% { filter: brightness(1); }
+}
+
+@keyframes pulsate {
+  100% {
+    text-shadow:
+      0 0 2px var(--neon-red),
+      0 0 6px var(--neon-red-glow),
+      0 0 15px var(--neon-red-glow);
+
+    box-shadow:
+      0 0 5px var(--neon-red),
+      0 0 15px var(--neon-red),
+      0 0 30px var(--neon-red-glow);
+
+    border-color: var(--neon-red);
+  }
+
+  0% {
+    text-shadow:
+      0 0 4px var(--neon-red-glow),
+      0 0 20px var(--neon-red),
+      0 0 40px var(--neon-red);
+
+    box-shadow:
+      0 0 10px var(--neon-red),
+      0 0 30px var(--neon-red),
+      0 0 60px var(--neon-red-glow);
+
+    border-color: var(--neon-red);
+  }
+}

@@ -6,214 +6,26 @@
 <title>???</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-    box-sizing:border-box;
-
-    --neon-blue:#2323FF;
-    --neon-blue-glow:rgba(35,35,255,.95);
-    --neon-blue-outer:rgba(35,35,255,.45);
-
-    --neon-red:#ff1e1e;
-    --neon-red-glow:rgba(255,30,30,.85);
-    
-}
-
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:flex-end;
-    background:radial-gradient(circle at center,#0b1a2a,#020409 80%);
-    font-family:Orbitron,sans-serif;
-    overflow:hidden;
-}
-
-/* ESCENA (CÁMARA) */
-
-.scene{
-    position:relative;
-    width:100vw;
-    height:85vh;
-    perspective: 1100px;
-}
-
-/* CONTENEDOR 3D */
-
-.city{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:80vh;
-    transform-style:preserve-3d;
-}
-
-/* PARED */
-
-.building{
-    position:fixed;
-    bottom:0;
-    width:100vw;
-    height:100vh;
-    background:url("./img/kenny-eliason.jpg") center/cover;
-    background-repeat: repeat-x;
-    filter:brightness(.25);
-}
-
-/* IZQUIERDA */
-.building.left{
-    left:50%;
-    transform-origin:right center;
-    transform:
-        translateX(-100%)
-        rotateY(-35deg)
-        translateZ(-250px);
-}
-
-/* DERECHA */
-.building.right{
-    left:50%;
-    transform-origin:left center;
-    transform:
-        
-        rotateY(35deg)
-        translateZ(-250px);
-}
-
-/* ESQUINA (LO MÁS CERCANO) */
-
-.corner{
-    position:relative;
-    top:25%;
-    left:50%;
-    transform:
-        translateX(-50%)
-        translateZ(180px);
-    width:14px;
-    height:52%;
-    background:#0a0f1f;
-    border-radius:6px;
-
-    box-shadow:
-        0 0 15px var(--neon-blue),
-        0 0 50px var(--neon-blue-glow),
-        0 0 120px var(--neon-blue-outer);
-}
+<link rel="stylesheet" href="./css/index.css">
 
 
-.billboard{
-    position:absolute;
-    bottom:14vh;
-
-    width:clamp(220px, 28vw, 420px);
-    aspect-ratio: 1 / 1;  
-
-    background:linear-gradient(135deg,#0a0f1f,#121c3a);
-    overflow:hidden;
-
-    box-shadow:
-        0 0 25px var(--neon-blue-glow),
-        0 0 70px var(--neon-blue-outer);
-}
-.billboard.left,
-.billboard.right{
-    transform:
-        translateX(-100%) rotateY(-35deg) translateZ(90px);
-}
-
-/* IZQUIERDO */
-.billboard.left{
-    left:51%;
-    transform-origin:right center;
-    transform:
-        translateX(-100%)   /* lo mueve hacia la izquierda */
-        rotateY(-35deg)
-        translateZ(60px);
-    border-radius:12px 0 0 12px;
-}
-
-/* DERECHO */
-.billboard.right{
-    left:49%;
-    transform-origin:left center;
-    transform:
-        rotateY(35deg)
-        translateZ(60px);
-    border-radius:0 12px 12px 0;
-}
-
-/* CONTENIDO */
-
-.content{
-    padding:clamp(20px,3vw,40px);
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-
-/* TEXTO */
-
-.artist{
-    font-size:clamp(1.5rem,4vw,3rem);
-    color:var(--neon-red);
-    text-shadow:
-        0 0 10px var(--neon-red-glow),
-        0 0 30px rgba(255,30,30,.5);
-}
-
-.song{
-    font-size:clamp(1rem,2vw,1.5rem);
-    color:#fff;
-    margin:.5em 0;
-}
-
-.countdown{
-    font-size:clamp(1rem,3vw,2rem);
-    color:var(--neon-red);
-    text-shadow:
-        0 0 10px var(--neon-red-glow),
-        0 0 25px var(--neon-blue-glow),
-        0 0 60px var(--neon-blue-outer);
-}
-
-</style>
 </head>
 <body>
 
-<div class="scene">
-    <div class="city">
-
-        <!-- FONDO -->
-        <div class="building left"></div>
-        <div class="building right"></div>
-
-        <!-- BILLBOARD IZQUIERDO -->
-        <div class="billboard left">
-            <div class="content">
-                <div class="artist">T A I L U S</div>
-                <div class="song">? ? ?</div>
-                <div class="countdown">00:12:34</div>
-            </div>
-        </div>
-
-        <!-- BILLBOARD DERECHO -->
-        <div class="billboard right">
-            <div class="content">
-                <div class="artist">T A I L U S</div>
-                <div class="song">? ? ?</div>
-                <div class="countdown">00:12:34</div>
-            </div>
-        </div>
-
-        <!-- ESQUINA -->
-        <div class="corner"></div>
-
-    </div>
-</div>
+    <div class="code">
+		<input type="text" id="codeInput" placeholder="Inserte codigo |">
+		<button class="enter" id="enter">? ? ? ?</button>
+	</div>
+	
+	<script>
+		const input=document.getElementById("codeInput");
+		let showCursor = true;
+		
+		setInterval(()=>{
+			input.placeholder = showCursor ? "Inserte codigo |" : "Inserte codigo ";
+			showCursor = !showCursor;
+		},500);
+	</script>
 
 </body>
 </html>
