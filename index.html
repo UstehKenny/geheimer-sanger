@@ -13,19 +13,10 @@
 <body>
 
     <div class="code">
-		<input type="text" id="codeInput" placeholder="Inserte codigo |">
-		<button class="enter" id="enter">? ? ? ?</button>
+        <input type="text" name="codigo" id="codeInput" placeholder="Inserte codigo |" required>
+        <button class="enter" id="enter">Enviar</button>
 	</div>
-	
-	<script>
-		const input=document.getElementById("codeInput");
-		let showCursor = true;
-		
-		setInterval(()=>{
-			input.placeholder = showCursor ? "Inserte codigo |" : "Inserte codigo ";
-			showCursor = !showCursor;
-		},500);
-	</script>
 
+    <script src="./js/script.js"></script>
 </body>
 </html>
